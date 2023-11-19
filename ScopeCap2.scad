@@ -19,12 +19,14 @@ capHeight = capDepth + capThickness;
 cordRadius = cordDiam / 2;
 cordHoleOffset = capRadius + (cordRadius);
 
-tabWidth = 15;
+tabWidth = capRadius * 0.65;
 tabLengthBottom = 3; // length to extend past bottom of scope cap
 tabLengthTop = -1; // length to extend past bottom of scope cap
 tabThickness = 3; // essentially the thickness of the tab
-tabSlopeThickness = 2; // thickness across which to slope
 tabBaseWidth = capRadius; // determines the angle of the tab
+
+slopeType = 2; // 0 = None, 1 = Tabs only, 2 = All
+slopeThickness = 2; // thickness across which to slope
 
 function magnitude2(a, b) = sqrt(a*a + b*b);
 
@@ -91,69 +93,27 @@ union()
 {
     difference()
     {
-        /* No slope
+        cordTabRadius = cordHoleOffset + cordRadius + capThickness;
+        flipTabBottomRadius = magnitude2(tabWidth, -capRadius - tabLengthBottom);
+        flipTabTopRadius = magnitude2(tabWidth, capRadius + tabLengthTop);
+        cylOuterChamferRadius = max(cordTabRadius, flipTabBottomRadius, flipTabTopRadius);
+
+        assert(slopeType >= 0 && slopeType <= 2, "Valid SlopeType must be selected.");
+        if(slopeType == 0)
         union()
         {
             chamfered_extrude(capHeight, endScale = 0.975, endHeight = 1) capPoly();
             linear_extrude(tabThickness) tabs();
         }
-        */
-
-        /* Slope only on the tab
+        if(slopeType == 1)
         union()
         {
             chamfered_extrude(capHeight, endScale = 0.975, endHeight = 1) capPoly();
-            difference()
-            {
-                linear_extrude(tabThickness) tabs();
-                difference()
-                {
-                    cordTabRadius = cordRadius + capThickness;
-                    flipTabBottomRadius = magnitude2(tabWidth, -capRadius - tabLengthBottom);
-                    flipTabTopRadius = magnitude2(tabWidth, capRadius + tabLengthTop);
-                    chamferCylOuterRadius = max(cordTabRadius, flipTabBottomRadius, flipTabTopRadius);
-                    chamferCylInnerScale = capRadius / chamferCylOuterRadius;
-
-                    cylinder(tabSlopeThickness - epsilon, r=chamferCylOuterRadius);
-
-                    translate([0,0,-epsilon])
-                    chamfered_extrude(tabSlopeThickness + epsilon, startScale = chamferCylInnerScale, startHeight=tabSlopeThickness + epsilon)
-                    circle(chamferCylOuterRadius);
-                }
-            }
+            cylindrical_outer_chamfer(slopeThickness, capRadius, cylOuterChamferRadius)
+            linear_extrude(tabThickness) tabs();
         }
-        */
-
-        /* Slope the entire cap
-        difference()
-        {
-            union()
-            {
-                chamfered_extrude(capHeight, endScale = 0.975, endHeight = 1) capPoly();
-                linear_extrude(tabThickness) tabs();
-            }
-            difference()
-            {
-                cordTabRadius = cordHoleOffset + cordRadius + capThickness;
-                flipTabBottomRadius = magnitude2(tabWidth, -capRadius - tabLengthBottom);
-                flipTabTopRadius = magnitude2(tabWidth, capRadius + tabLengthTop);
-                chamferCylOuterRadius = max(cordTabRadius, flipTabBottomRadius, flipTabTopRadius);
-                chamferCylInnerScale = capRadius / chamferCylOuterRadius;
-
-                cylinder(tabSlopeThickness - epsilon, r=chamferCylOuterRadius);
-
-                translate([0,0,-epsilon])
-                chamfered_extrude(tabSlopeThickness + epsilon, startScale = chamferCylInnerScale, startHeight=tabSlopeThickness + epsilon)
-                circle(chamferCylOuterRadius);
-            }
-        }
-        */
-
-        cordTabRadius = cordHoleOffset + cordRadius + capThickness;
-        flipTabBottomRadius = magnitude2(tabWidth, -capRadius - tabLengthBottom);
-        flipTabTopRadius = magnitude2(tabWidth, capRadius + tabLengthTop);
-        cylOuterChamferRadius = max(cordTabRadius, flipTabBottomRadius, flipTabTopRadius);
-        cylindrical_outer_chamfer(tabSlopeThickness, capRadius, cylOuterChamferRadius)
+        if(slopeType == 2)
+        cylindrical_outer_chamfer(slopeThickness, capRadius, cylOuterChamferRadius)
         {
             chamfered_extrude(capHeight, endScale = 0.975, endHeight = 1) capPoly();
             linear_extrude(tabThickness) tabs();
