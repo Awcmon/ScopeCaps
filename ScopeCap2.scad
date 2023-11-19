@@ -49,7 +49,6 @@ module tabs()
             translate([-tabWidth + tabRounding, -capRadius - tabLengthBottom + tabRounding, 0]) circle(tabRounding);
             translate([tabWidth - tabRounding, -capRadius - tabLengthBottom + tabRounding, 0]) circle(tabRounding);
         }
-
         translate([-tabBaseWidth, 0, 0]) circle(tabRounding);
         translate([tabBaseWidth, 0, 0]) circle(tabRounding);
         if(tabLengthTop >= 0)
@@ -65,9 +64,9 @@ module chamfered_extrude(height, startScale = 1, startHeight = 0, endScale = 1, 
     assert(height >= startHeight + endHeight, "start + end heights cannot be greater than total height");
     midScale = 1;
     midHeight = height - startHeight - endHeight;
-    linear_extrude(height = startHeight, scale = midScale/startScale) scale(startScale) children();
-    translate([0,0,startHeight]) linear_extrude(height = midHeight, scale = midScale) children();
-    translate([0,0,startHeight + midHeight]) linear_extrude(height = endHeight, scale = endScale) children();
+    if(startHeight > 0) linear_extrude(height = startHeight, scale = midScale/startScale) scale(startScale) children();
+    if(midHeight > 0) translate([0,0,startHeight]) linear_extrude(height = midHeight, scale = midScale) children();
+    if(endHeight > 0) translate([0,0,startHeight + midHeight]) linear_extrude(height = endHeight, scale = endScale) children();
 }
 
 module cylindrical_outer_chamfer(h, startRadius, radius)
@@ -105,14 +104,14 @@ union()
             chamfered_extrude(capHeight, endScale = 0.975, endHeight = 1) capPoly();
             linear_extrude(tabThickness) tabs();
         }
-        if(slopeType == 1)
+        else if(slopeType == 1)
         union()
         {
             chamfered_extrude(capHeight, endScale = 0.975, endHeight = 1) capPoly();
             cylindrical_outer_chamfer(slopeThickness, capRadius, cylOuterChamferRadius)
             linear_extrude(tabThickness) tabs();
         }
-        if(slopeType == 2)
+        else if(slopeType == 2)
         cylindrical_outer_chamfer(slopeThickness, capRadius, cylOuterChamferRadius)
         {
             chamfered_extrude(capHeight, endScale = 0.975, endHeight = 1) capPoly();
