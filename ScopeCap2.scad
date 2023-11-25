@@ -1,14 +1,14 @@
 // Units are in mm
-$fn= $preview ? 32 : 64;
+$fn= $preview ? 32 : 128;
 
 epsilon = 0.005;
 tolerance = 0.025;
 
 function InchToMillis(inch) = inch * 25.4;
 
-scopeOuterDiameter = 44; // cap inner diameter
+scopeOuterDiameter = 46; // cap inner diameter
 capThickness = 2.5;
-capDepth = 3;
+capDepth = 4.5;
 cordDiam = 3;
 textDepth = 0.25;
 
@@ -25,7 +25,7 @@ tabLengthTop = -1; // length to extend past bottom of scope cap
 tabThickness = 3; // essentially the thickness of the tab
 tabBaseWidth = capRadius; // determines the angle of the tab
 
-slopeType = 2; // 0 = None, 1 = Tabs only, 2 = All
+slopeType = 0; // 0 = None, 1 = Tabs only, 2 = All
 slopeThickness = 2; // thickness across which to slope
 
 function magnitude2(a, b) = sqrt(a*a + b*b);
@@ -122,14 +122,14 @@ union()
         translate([0, 0, capThickness]) chamfered_extrude(capDepth, endScale = 1.05, endHeight = 1) circle(d=scopeOuterDiameter);
 
         // Chamfered holes for the cords
-        translate([-cordHoleOffset, 0, 0]) chamfered_extrude(capHeight, 2, 1.5, 1.2, 1.5) circle(d=cordDiam);
-        translate([cordHoleOffset, 0, 0]) chamfered_extrude(capHeight, 2, 1.5, 1.2, 1.5) circle(d=cordDiam);
+        translate([-cordHoleOffset, 0, 0]) chamfered_extrude(capHeight, 1.5, 1.5, 1.2, 1.5) circle(d=cordDiam);
+        translate([cordHoleOffset, 0, 0]) chamfered_extrude(capHeight, 1.5, 1.5, 1.2, 1.5) circle(d=cordDiam);
     }
 
     // Add logo and text to the inside of the cap
-    translate([0,0,capThickness]) linear_extrude(textDepth) offset(delta=0.001) 
+    translate([0, 5, capThickness]) linear_extrude(textDepth) offset(delta=0.001) 
     import("SciTangAwcmon3.svg", center = true, dpi = 1024);
 
-    translate([0,-10,capThickness]) linear_extrude(textDepth) 
-    text(str(scopeOuterDiameter, "mm"), size = 2, halign="center", valign="bottom");
+    translate([0, -7.5, capThickness]) linear_extrude(textDepth) 
+    text(str(scopeOuterDiameter, "mm"), size = 5, halign="center", valign="bottom", font="Agency FB:style=Bold");
 }
