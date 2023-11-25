@@ -6,11 +6,12 @@ tolerance = 0.025;
 
 function InchToMillis(inch) = inch * 25.4;
 
-scopeOuterDiameter = 46; // cap inner diameter
+scopeOuterDiameter = 45.5; // cap inner diameter
 capThickness = 2.5;
 capDepth = 4.5;
 cordDiam = 3;
 textDepth = 0.25;
+textPlacement = 2; // 0 = None, 1 = Inside and Protruding, 2 = Outside and Inset
 
 tabRounding = 3;
 
@@ -57,6 +58,15 @@ module tabs()
             translate([tabWidth - tabRounding, capRadius + tabLengthTop - tabRounding, 0]) circle(tabRounding);
         }
     }
+}
+
+module logo_and_text()
+{
+    translate([0, 7.5, 0]) offset(delta=0.001) 
+    import("SciTangAwcmon3.svg", center = true, dpi = 768);
+
+    translate([0, -7.5, 0])
+    text(str(scopeOuterDiameter, "mm"), size = 5, halign="center", valign="bottom", font="Agency FB:style=Bold");
 }
 
 module chamfered_extrude(height, startScale = 1, startHeight = 0, endScale = 1, endHeight = 0)
@@ -124,12 +134,11 @@ union()
         // Chamfered holes for the cords
         translate([-cordHoleOffset, 0, 0]) chamfered_extrude(capHeight, 1.5, 1.5, 1.2, 1.5) circle(d=cordDiam);
         translate([cordHoleOffset, 0, 0]) chamfered_extrude(capHeight, 1.5, 1.5, 1.2, 1.5) circle(d=cordDiam);
+
+        // Add logo and text to the inside of the cap
+        if(textPlacement == 2) linear_extrude(textDepth) rotate([0,180,0]) logo_and_text();
     }
 
     // Add logo and text to the inside of the cap
-    translate([0, 5, capThickness]) linear_extrude(textDepth) offset(delta=0.001) 
-    import("SciTangAwcmon3.svg", center = true, dpi = 1024);
-
-    translate([0, -7.5, capThickness]) linear_extrude(textDepth) 
-    text(str(scopeOuterDiameter, "mm"), size = 5, halign="center", valign="bottom", font="Agency FB:style=Bold");
+    if(textPlacement == 1) translate([0, 0, capThickness]) linear_extrude(textDepth) logo_and_text();
 }
