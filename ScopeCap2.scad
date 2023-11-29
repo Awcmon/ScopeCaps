@@ -63,9 +63,11 @@ module tabs()
 module logo_and_text()
 {
     translate([0, 7.5, 0]) offset(delta=0.001) 
+    translate([0, 0, 0]) offset(delta=0.001) 
     import("SciTangAwcmon3.svg", center = true, dpi = 768);
 
     translate([0, -7.5, 0])
+    translate([0, -15, 0])
     text(str(scopeOuterDiameter, "mm"), size = 5, halign="center", valign="bottom", font="Agency FB:style=Bold");
 }
 
