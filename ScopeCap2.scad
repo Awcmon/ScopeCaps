@@ -7,26 +7,25 @@ tolerance = 0.025;
 function InchToMillis(inch) = inch * 25.4;
 
 scopeOuterDiameter = 45.5; // cap inner diameter
-capThickness = 2.5;
 capThickness = 2;
 wallThickness = 2;
 capDepth = 4.5;
-cordDiam = 3;
-textDepth = 0.25;
+cordDiam = 3.5;
+textDepth = 0.3;
 textPlacement = 2; // 0 = None, 1 = Inside and Protruding, 2 = Outside and Inset
 
 tabRounding = 3;
 
-capRadius = (scopeOuterDiameter / 2) + capThickness;
 capRadius = (scopeOuterDiameter / 2) + wallThickness;
 capHeight = capDepth + capThickness;
 cordRadius = cordDiam / 2;
-cordHoleOffset = capRadius + (cordRadius);
+cordHoleInnerMargin = 1.5;
+cordHoleOffset = (scopeOuterDiameter / 2) + (cordRadius) + cordHoleInnerMargin;
 
 tabWidth = capRadius * 0.65;
 tabLengthBottom = 3; // length to extend past bottom of scope cap
 tabLengthTop = -1; // length to extend past bottom of scope cap
-tabThickness = 3; // essentially the thickness of the tab
+tabThickness = 2; // essentially the thickness of the tab
 tabBaseWidth = capRadius; // determines the angle of the tab
 
 slopeType = 0; // 0 = None, 1 = Tabs only, 2 = All
@@ -39,8 +38,6 @@ module capPoly()
     hull()
     {
         circle(capRadius);
-        translate([-cordHoleOffset,0,0]) circle(r=cordRadius + capThickness);
-        translate([cordHoleOffset,0,0]) circle(r=cordRadius + capThickness);
         translate([-cordHoleOffset,0,0]) circle(r=cordRadius + wallThickness);
         translate([cordHoleOffset,0,0]) circle(r=cordRadius + wallThickness);
     }
@@ -67,11 +64,9 @@ module tabs()
 
 module logo_and_text()
 {
-    translate([0, 7.5, 0]) offset(delta=0.001) 
     translate([0, 0, 0]) offset(delta=0.001) 
     import("SciTangAwcmon3.svg", center = true, dpi = 768);
 
-    translate([0, -7.5, 0])
     translate([0, -15, 0])
     text(str(scopeOuterDiameter, "mm"), size = 5, halign="center", valign="bottom", font="Agency FB:style=Bold");
 }
@@ -109,7 +104,6 @@ union()
 {
     difference()
     {
-        cordTabRadius = cordHoleOffset + cordRadius + capThickness;
         cordTabRadius = cordHoleOffset + cordRadius + wallThickness;
         flipTabBottomRadius = magnitude2(tabWidth, -capRadius - tabLengthBottom);
         flipTabTopRadius = magnitude2(tabWidth, capRadius + tabLengthTop);
@@ -119,20 +113,20 @@ union()
         if(slopeType == 0)
         union()
         {
-            chamfered_extrude(capHeight, endScale = 0.975, endHeight = 1) capPoly();
+            chamfered_extrude(capHeight, endScale = 0.985, endHeight = 1) capPoly();
             linear_extrude(tabThickness) tabs();
         }
         else if(slopeType == 1)
         union()
         {
-            chamfered_extrude(capHeight, endScale = 0.975, endHeight = 1) capPoly();
+            chamfered_extrude(capHeight, endScale = 0.985, endHeight = 1) capPoly();
             cylindrical_outer_chamfer(slopeThickness, capRadius, cylOuterChamferRadius)
             linear_extrude(tabThickness) tabs();
         }
         else if(slopeType == 2)
         cylindrical_outer_chamfer(slopeThickness, capRadius, cylOuterChamferRadius)
         {
-            chamfered_extrude(capHeight, endScale = 0.975, endHeight = 1) capPoly();
+            chamfered_extrude(capHeight, endScale = 0.985, endHeight = 1) capPoly();
             linear_extrude(tabThickness) tabs();
         }
 
@@ -140,10 +134,10 @@ union()
         translate([0, 0, capThickness]) chamfered_extrude(capDepth, endScale = 1.05, endHeight = 1) circle(d=scopeOuterDiameter);
 
         // Chamfered holes for the cords
-        translate([-cordHoleOffset, 0, 0]) chamfered_extrude(capHeight, 1.5, 1.5, 1.2, 1.5) circle(d=cordDiam);
-        translate([cordHoleOffset, 0, 0]) chamfered_extrude(capHeight, 1.5, 1.5, 1.2, 1.5) circle(d=cordDiam);
+        translate([-cordHoleOffset, 0, 0]) chamfered_extrude(capHeight, 1.5, 1.5, 1, 1.5) circle(d=cordDiam);
+        translate([cordHoleOffset, 0, 0]) chamfered_extrude(capHeight, 1.5, 1.5, 1, 1.5) circle(d=cordDiam);
 
-        // Add logo and text to the inside of the cap
+        // Add logo and text to the outside of the cap
         if(textPlacement == 2) linear_extrude(textDepth) rotate([0,180,0]) logo_and_text();
     }
 
