@@ -8,6 +8,8 @@ function InchToMillis(inch) = inch * 25.4;
 
 scopeOuterDiameter = 45.5; // cap inner diameter
 capThickness = 2.5;
+capThickness = 2;
+wallThickness = 2;
 capDepth = 4.5;
 cordDiam = 3;
 textDepth = 0.25;
@@ -16,6 +18,7 @@ textPlacement = 2; // 0 = None, 1 = Inside and Protruding, 2 = Outside and Inset
 tabRounding = 3;
 
 capRadius = (scopeOuterDiameter / 2) + capThickness;
+capRadius = (scopeOuterDiameter / 2) + wallThickness;
 capHeight = capDepth + capThickness;
 cordRadius = cordDiam / 2;
 cordHoleOffset = capRadius + (cordRadius);
@@ -38,6 +41,8 @@ module capPoly()
         circle(capRadius);
         translate([-cordHoleOffset,0,0]) circle(r=cordRadius + capThickness);
         translate([cordHoleOffset,0,0]) circle(r=cordRadius + capThickness);
+        translate([-cordHoleOffset,0,0]) circle(r=cordRadius + wallThickness);
+        translate([cordHoleOffset,0,0]) circle(r=cordRadius + wallThickness);
     }
 }
 
@@ -105,6 +110,7 @@ union()
     difference()
     {
         cordTabRadius = cordHoleOffset + cordRadius + capThickness;
+        cordTabRadius = cordHoleOffset + cordRadius + wallThickness;
         flipTabBottomRadius = magnitude2(tabWidth, -capRadius - tabLengthBottom);
         flipTabTopRadius = magnitude2(tabWidth, capRadius + tabLengthTop);
         cylOuterChamferRadius = max(cordTabRadius, flipTabBottomRadius, flipTabTopRadius);
