@@ -1,19 +1,26 @@
 // Units are in mm
-$fn= $preview ? 32 : 64;
+
+// M2 Screw dims:
+//  Head: 3.65mm
+//  Hex: 4.50mm
+//  Shaft: 1.92mm 
+
+$fn= $preview ? 32 : 128;
 
 epsilon = 0.005;
 tolerance = 0.025;
 
 function InchToMillis(inch) = inch * 25.4;
 
-tubeDiameter = 44; // cap inner diameter
-collarThickness = 3;
-collarLength = 6;
-cordDiam = 3;
+tubeDiameter = 44.5; // collar inner diameter
+collarThickness = 2;
+collarLength = 8;
+cordDiam = 3.5;
 
 collarRadius = (tubeDiameter / 2) + collarThickness;
 cordRadius = cordDiam / 2;
-cordHoleOffset = collarRadius + (cordRadius);
+cordHoleInnerMargin = 1.5;
+cordHoleOffset = (tubeDiameter / 2) + (cordRadius) + cordHoleInnerMargin;
 
 function magnitude2(a, b) = sqrt(a*a + b*b);
 
@@ -58,7 +65,7 @@ difference()
     // Screw hole
     cylHeight = 20;
     counterSinkGap = 5;
-    translate([0, -cordHoleOffset, collarLength/2]) rotate([0,90,0]) translate([0,0,-cylHeight/2]) cylinder(cylHeight, d=2);
+    translate([0, -cordHoleOffset, collarLength/2]) rotate([0,90,0]) translate([0,0,-cylHeight/2]) cylinder(cylHeight, d=2.5);
     translate([counterSinkGap, -cordHoleOffset, collarLength/2]) rotate([0,90,0]) cylinder(cylHeight, d=4);
-    translate([-counterSinkGap, -cordHoleOffset, collarLength/2]) rotate([0,-90,0]) cylinder(cylHeight, d=4);
+    translate([-counterSinkGap, -cordHoleOffset, collarLength/2]) rotate([0,-90,0]) cylinder(cylHeight, d=5, $fn=6);
 }
