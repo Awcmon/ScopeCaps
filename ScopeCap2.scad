@@ -9,7 +9,8 @@ function InchToMillis(inch) = inch * 25.4;
 scopeOuterDiameter = 45.5; // cap inner diameter
 capThickness = 2;
 wallThickness = 2;
-capDepth = 4.5;
+capDepth = 3;
+capChamferDepth = 2;
 cordDiam = 3.5;
 textDepth = 0.3;
 textPlacement = 2; // 0 = None, 1 = Inside and Protruding, 2 = Outside and Inset
@@ -131,7 +132,8 @@ union()
         }
 
         // Chamfered cutout for the scope tube
-        translate([0, 0, capThickness]) chamfered_extrude(capDepth, endScale = 1.05, endHeight = 1) circle(d=scopeOuterDiameter);
+        translate([0, 0, capThickness]) 
+        chamfered_extrude(capDepth, endScale = 1.05, endHeight = capChamferDepth) circle(d=scopeOuterDiameter);
 
         // Chamfered holes for the cords
         translate([-cordHoleOffset, 0, 0]) chamfered_extrude(capHeight, 1.5, 1.5, 1, 1.5) circle(d=cordDiam);
