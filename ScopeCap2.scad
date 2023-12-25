@@ -6,16 +6,21 @@ tolerance = 0.025;
 
 function InchToMillis(inch) = inch * 25.4;
 
-scopeOuterDiameter = 45.5; // cap inner diameter
+scopeOuterDiameter = 42.5; // cap inner diameter
 capThickness = 2;
 wallThickness = 2;
 capDepth = 3;
 capChamferDepth = 2;
 cordDiam = 3.5;
+
+logoPath = "SciTangAwcmon3_Bold.svg";
+logoSrcW = 40;
+logoSrcH = 17;
+logoDestH = 12;
+logoScale = logoDestH / logoSrcH;
+logoDestW = logoSrcW * logoScale;
 textDepth = 0.3;
 textPlacement = 2; // 0 = None, 1 = Inside and Protruding, 2 = Outside and Inset
-
-tabRounding = 3;
 
 capRadius = (scopeOuterDiameter / 2) + wallThickness;
 capHeight = capDepth + capThickness;
@@ -28,6 +33,7 @@ tabLengthBottom = 3; // length to extend past bottom of scope cap
 tabLengthTop = -1; // length to extend past bottom of scope cap
 tabThickness = 2; // essentially the thickness of the tab
 tabBaseWidth = capRadius; // determines the angle of the tab
+tabRounding = 3;
 
 slopeType = 0; // 0 = None, 1 = Tabs only, 2 = All
 slopeThickness = 2; // thickness across which to slope
@@ -66,7 +72,7 @@ module tabs()
 module logo_and_text()
 {
     translate([0, 0, 0]) offset(delta=0.001) 
-    import("SciTangAwcmon3.svg", center = true, dpi = 768);
+    scale(logoScale) import("SciTangAwcmon3_Bold.svg", center = true);
 
     translate([0, -15, 0])
     text(str(scopeOuterDiameter, "mm"), size = 5, halign="center", valign="bottom", font="Agency FB:style=Bold");
