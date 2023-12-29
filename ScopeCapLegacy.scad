@@ -1,3 +1,5 @@
+// Old scope cap design that has radial tabs rather than the singular tab.
+
 // Units are in mm
 $fn= $preview ? 32 : 64;
 
