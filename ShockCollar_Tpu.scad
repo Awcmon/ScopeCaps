@@ -12,8 +12,8 @@ tolerance = 0.025;
 
 function InchToMillis(inch) = inch * 25.4;
 
-tubeDiameter = 44.5; // collar inner diameter
-collarThickness = 2;
+tubeDiameter = 42.6; // collar inner diameter
+collarThickness = 1.75;
 collarLength = 8;
 cordDiam = 3.5;
 
