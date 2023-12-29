@@ -1,9 +1,6 @@
-// Units are in mm
+// Version of the ShockCollar that is designed to be printed in TPU and slides on without hardware.
 
-// M2 Screw dims:
-//  Head: 3.65mm
-//  Hex: 4.50mm
-//  Shaft: 1.92mm 
+// Units are in mm
 
 $fn= $preview ? 32 : 128;
 

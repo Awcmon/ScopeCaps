@@ -1,3 +1,5 @@
+// Requires M2 screws for mounting to clamp onto the tube.
+
 // Units are in mm
 
 // M2 Screw dims:
