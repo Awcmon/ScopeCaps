@@ -2,8 +2,8 @@
 
 // Units are in mm
 $fn= $preview ? 32 : 64;
+epsilon = $preview ? 0.005 : 0;
 
-epsilon = 0.005;
 tolerance = 0.025;
 
 function InchToMillis(inch) = inch * 25.4;

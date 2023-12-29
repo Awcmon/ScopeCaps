@@ -8,8 +8,8 @@
 //  Shaft: 1.92mm 
 
 $fn= $preview ? 32 : 128;
+epsilon = $preview ? 0.005 : 0;
 
-epsilon = 0.005;
 tolerance = 0.025;
 
 function InchToMillis(inch) = inch * 25.4;
