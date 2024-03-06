@@ -34,7 +34,7 @@ module chamfered_extrude(height, startScale = 1, startHeight = 0, endScale = 1, 
 difference()
 {
     cylinder(d = outerDiam, totalLength);
-    cylinder(d = innerDiameter, totalLength + epsilon);
+    chamfered_extrude(totalLength + epsilon, endScale = 1.075, endHeight = 0.8) circle(d = innerDiameter);
 }
 
 difference()
