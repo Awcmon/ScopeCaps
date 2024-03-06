@@ -6,16 +6,16 @@ epsilon = $preview ? 0.005 : 0;
 function InchToMillis(inch) = inch * 25.4;
 function MillisToInch(mm) = mm / 25.4;
 
-innerDiameter = 28.6;
-wallThickness = 2;
-sleeveLength = 10;
-hexLength = 10;
-hexSize = 3;
+innerDiameter = 29;
+wallThickness = 1.5;
+sleeveLength = 9;
+hexLength = 12;
+hexSize = 4.5;
 hexGap = 1;
 
+hexLayers = ceil((innerDiameter / (hexSize + hexGap)) / 2);
 outerDiam = innerDiameter + wallThickness * 2;
 totalLength = sleeveLength + hexLength;
-hexCtC = hexGap + hexSize;
 horiz = 0.75 * hexSize;
 sqrt3 = sqrt(3);
 vert = sqrt3 / 2 * hexSize;
@@ -31,21 +31,28 @@ module chamfered_extrude(height, startScale = 1, startHeight = 0, endScale = 1, 
     if(endHeight > 0) translate([0,0,startHeight + midHeight]) linear_extrude(height = endHeight, scale = endScale) children();
 }
 
+// Outer wall
 difference()
 {
     cylinder(d = outerDiam, totalLength);
-    chamfered_extrude(totalLength + epsilon, endScale = 1.075, endHeight = 0.8) circle(d = innerDiameter);
+    chamfered_extrude(totalLength + epsilon, endScale = 1.05, endHeight = 0.8) circle(d = innerDiameter);
 }
 
+// Hex grating
 difference()
 {
     cylinder(d = outerDiam, hexLength);
-    cylinder(d = hexSize, hexLength + epsilon, $fn=6);
-    for(j = [-6:6])
+    for(y = [-hexLayers:hexLayers])
     {
-        for(i = [-6:6])
+        for(x = [-hexLayers:hexLayers])
         {
-            translate([hexSpacing * 1.5 * i, hexSpacing * (sqrt3 / 2 * i + sqrt3 * j), 0])
+            // The double for loops naturally generate a skewed square shape.
+            // We can generate a more circular/hex shape by clamping the hex distance to a certain radius.
+            // This helps us avoid subtracting unnecessary polygons and looks nicer if hexLayers is not enough to span
+            // the entire radius.
+            hexDist = (abs(x) + abs(x + y) + abs(y)) / 2;
+            if(hexDist <= hexLayers)
+            translate([hexSpacing * 1.5 * x, hexSpacing * (sqrt3/2 * x + sqrt3 * y), 0])  // Hex to Euclidean coords
             cylinder(d = hexSize, hexLength + epsilon, $fn=6);
         }
     }
