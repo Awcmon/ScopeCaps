@@ -7,10 +7,10 @@ epsilon = $preview ? 0.005 : 0;
 function InchToMillis(inch) = inch * 25.4;
 function MillisToInch(mm) = mm / 25.4;
 
-innerDiameter = 31.4;
+innerDiameter = 28.8;
 wallThickness = 1.5;
-length = 25;
-lipWidth = 2;
+length = 13;
+lipWidth = 3;
 lipThickness = 2;
 
 outerDiam = innerDiameter + wallThickness * 2;

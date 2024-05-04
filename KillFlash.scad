@@ -6,14 +6,14 @@ epsilon = $preview ? 0.005 : 0;
 function InchToMillis(inch) = inch * 25.4;
 function MillisToInch(mm) = mm / 25.4;
 
-innerDiameter = 29;
+innerDiameter = 28.9;
 wallThickness = 1.5;
 sleeveLength = 9;
-hexLength = 12;
+hexLength = 10;
 hexSize = 4.5;
-hexGap = 1;
+hexGap = 0.5;
 
-hexLayers = ceil((innerDiameter / (hexSize + hexGap)) / 2);
+hexLayers = ceil((innerDiameter / (hexSize + hexGap)) / 2) + 1;
 outerDiam = innerDiameter + wallThickness * 2;
 totalLength = sleeveLength + hexLength;
 horiz = 0.75 * hexSize;
