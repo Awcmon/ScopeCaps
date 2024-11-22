@@ -6,20 +6,35 @@ epsilon = $preview ? 0.005 : 0;
 function InchToMillis(inch) = inch * 25.4;
 function MillisToInch(mm) = mm / 25.4;
 
-innerDiameter = 28.9;
-wallThickness = 1.5;
-sleeveLength = 9;
-hexLength = 10;
-hexSize = 4.5;
-hexGap = 0.5;
+// Inner diameter of the kill flash, or diameter of the bell
+innerDiameter = 32.75; // 0.05
+// The length of the bell the killflash slides over. The lip starts immediately past this distance, if there is one.
+sleeveLength = 12; // 0.05
+// How thick the sleeve is.
+wallThickness = 1.5; // 0.05
+// How long the hexes are.
+hexLength = 10; // 0.05
+// The diameter of the hex holes.
+hexSize = 4.5; // 0.05
+// How thick the material between the hexes are.
+hexGap = 1; // 0.05
+// Sometimes needs to be increased to get full hex coverage.
+numAdditionalHexLayers = 1; // 1
+// Use a lip instead of a chamfer. Used for stuff with a slight bell around the objective like the Viper PST II 1-6x.
+useLip = true;
+// Generally, the diameter of the tube
+lipInnerDiameter = 30; // 0.05
 
-hexLayers = ceil((innerDiameter / (hexSize + hexGap)) / 2) + 1;
+lipRadius = (innerDiameter - lipInnerDiameter) / 2;
+hexLayers = ceil((innerDiameter / (hexSize + hexGap)) / 2) + numAdditionalHexLayers;
 outerDiam = innerDiameter + wallThickness * 2;
-totalLength = sleeveLength + hexLength;
+totalLength = sleeveLength + hexLength + (useLip ? lipRadius*2 : 0);
 horiz = 0.75 * hexSize;
 sqrt3 = sqrt(3);
 vert = sqrt3 / 2 * hexSize;
 hexSpacing = hexSize * 0.5 + hexGap * 0.5;
+
+echo(totalLength=totalLength);
 
 module chamfered_extrude(height, startScale = 1, startHeight = 0, endScale = 1, endHeight = 0)
 {
@@ -35,7 +50,23 @@ module chamfered_extrude(height, startScale = 1, startHeight = 0, endScale = 1, 
 difference()
 {
     cylinder(d = outerDiam, totalLength);
-    chamfered_extrude(totalLength + epsilon, endScale = 1.05, endHeight = 0.8) circle(d = innerDiameter);
+    if(useLip)
+    {
+        cylinder(totalLength + epsilon, d = innerDiameter);
+    }
+    else
+    {
+        chamfered_extrude(totalLength + epsilon, endScale = 1.05, endHeight = 0.8) circle(d = innerDiameter);
+    }
+
+}
+
+if(useLip)
+{
+    translate([0,0,totalLength-lipRadius])
+    rotate_extrude(convexity = 10)
+    translate([innerDiameter/2, 0, 0])
+    circle(r = 1.375);
 }
 
 // Hex grating
@@ -57,4 +88,3 @@ difference()
         }
     }
 }
-
