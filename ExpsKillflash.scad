@@ -13,11 +13,16 @@ topWidth = 37;
 midWidth = 37;
 midRadiusing = 6;
 coverH = 27;
-coverExteriorH = 20;
+coverExteriorH = 22;
 // Width of the actual window.
 windowW = 32;
 windowH = 25;
 windowRadiusing = 6;
+hoodLength = 35;
+
+hexRadius = 2.5;
+hexGap = 0.5;
+hexLevels = 6;
 
 module window_profile()
 {
@@ -87,21 +92,21 @@ union()
     {
         killflash_profile();
         translate([0, (coverH + wallThickness)/2])
-        hexagons(2, 0.5, 8);
+        hexagons(hexRadius, hexGap, hexLevels);
     }
 }
 
 intersection()
 {
     translate([0, 0, 10])
-    linear_extrude(30)
+    linear_extrude(hoodLength)
     hollow_out(wallThickness)
     killflash_profile(false);
 
     intersectX = midWidth + wallThickness*2;
     intersectY = coverExteriorH - midRadiusing;
     translate([0, coverH + wallThickness - intersectY/2, 10])
-    linear_extrude(30)
+    linear_extrude(hoodLength)
     square([intersectX, intersectY], center=true);
 }
 
