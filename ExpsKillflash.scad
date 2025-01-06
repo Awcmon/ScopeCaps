@@ -7,7 +7,7 @@ use <hollow_out.scad>
 $fn= $preview ? 32 : 128;
 epsilon = $preview ? 0.001 : 0;
 
-wallThickness = 1.5;
+wallThickness = 1.75;
 topWindowRadiusing = 8;
 topWidth = 37;
 midWidth = 37;
@@ -25,9 +25,10 @@ hexGap = 0.5;
 hexLevels = 6;
 hexLength = 10;
 
-useRibs = true;
-topRibRadius = 1;
-sideRibRadius = 1.5;
+useTopRib = true;
+topRibRadius = 0.5;
+useSideRibs = false;
+sideRibRadius = 0.5;
 coverH = housingH + wallThickness;
 
 module window_profile()
@@ -117,7 +118,7 @@ intersection()
 }
 
 // Retention ribs
-if(useRibs)
+if(useTopRib)
 {
     // Top rib
     hull()
@@ -128,7 +129,10 @@ if(useRibs)
         translate([0, coverH, hexLength + topRibRadius + 5])
         sphere(topRibRadius);
     }
+}
 
+if(useSideRibs)
+{
     // Side ribs
     hull()
     {
@@ -139,7 +143,6 @@ if(useRibs)
         translate([midWidth/2 + wallThickness, yPos, hexLength + sideRibRadius + 5])
         sphere(sideRibRadius);
     }
-
     hull()
     {
         yPos = coverH - coverExteriorH + midRadiusing + sideRibRadius;
