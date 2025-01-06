@@ -12,7 +12,7 @@ topWindowRadiusing = 8;
 topWidth = 37;
 midWidth = 37;
 midRadiusing = 6;
-coverH = 27;
+housingH = 27;
 coverExteriorH = 22;
 // Width of the actual window.
 windowW = 32;
@@ -23,21 +23,27 @@ hoodLength = 35;
 hexRadius = 2.5;
 hexGap = 0.5;
 hexLevels = 6;
+hexLength = 10;
+
+useRibs = true;
+topRibRadius = 1;
+sideRibRadius = 1.5;
+coverH = housingH + wallThickness;
 
 module window_profile()
 {
     hull()
     {
-        translate([-topWidth/2 + topWindowRadiusing, coverH - topWindowRadiusing])
+        translate([-topWidth/2 + topWindowRadiusing, housingH - topWindowRadiusing])
         circle(r=topWindowRadiusing);
 
-        translate([topWidth/2 - topWindowRadiusing, coverH - topWindowRadiusing])
+        translate([topWidth/2 - topWindowRadiusing, housingH - topWindowRadiusing])
         circle(r=topWindowRadiusing);
 
-        translate([-midWidth/2 + midRadiusing, coverH - coverExteriorH + midRadiusing])
+        translate([-midWidth/2 + midRadiusing, housingH - coverExteriorH + midRadiusing])
         circle(r=midRadiusing);
 
-        translate([midWidth/2 - midRadiusing, coverH - coverExteriorH + midRadiusing])
+        translate([midWidth/2 - midRadiusing, housingH - coverExteriorH + midRadiusing])
         circle(r=midRadiusing);
 
         translate([0, windowH/2])
@@ -53,7 +59,7 @@ module killflash_profile(includeWindow = true)
 {
     hull()
     {
-        outerH = coverH + wallThickness;
+        outerH = coverH;
         outerTopW = topWidth + wallThickness*2;
         outerMidW = midWidth + wallThickness*2;
         outerTopRadiusing = topWindowRadiusing + wallThickness;
@@ -91,22 +97,56 @@ union()
     difference()
     {
         killflash_profile();
-        translate([0, (coverH + wallThickness)/2])
+        translate([0, (coverH)/2])
         hexagons(hexRadius, hexGap, hexLevels);
     }
 }
 
 intersection()
 {
-    translate([0, 0, 10])
+    translate([0, 0, hexLength])
     linear_extrude(hoodLength)
     hollow_out(wallThickness)
     killflash_profile(false);
 
     intersectX = midWidth + wallThickness*2;
     intersectY = coverExteriorH - midRadiusing;
-    translate([0, coverH + wallThickness - intersectY/2, 10])
+    translate([0, coverH - intersectY/2, hexLength])
     linear_extrude(hoodLength)
     square([intersectX, intersectY], center=true);
 }
 
+// Retention ribs
+if(useRibs)
+{
+    // Top rib
+    hull()
+    {
+        translate([0, coverH, hexLength + hoodLength - topRibRadius])
+        sphere(topRibRadius);
+
+        translate([0, coverH, hexLength + topRibRadius + 5])
+        sphere(topRibRadius);
+    }
+
+    // Side ribs
+    hull()
+    {
+        yPos = coverH - coverExteriorH + midRadiusing + sideRibRadius;
+        translate([midWidth/2 + wallThickness, yPos, hexLength + hoodLength - sideRibRadius])
+        sphere(sideRibRadius);
+
+        translate([midWidth/2 + wallThickness, yPos, hexLength + sideRibRadius + 5])
+        sphere(sideRibRadius);
+    }
+
+    hull()
+    {
+        yPos = coverH - coverExteriorH + midRadiusing + sideRibRadius;
+        translate([-midWidth/2 - wallThickness, yPos, hexLength + hoodLength - sideRibRadius])
+        sphere(sideRibRadius);
+
+        translate([-midWidth/2 - wallThickness, yPos, hexLength + sideRibRadius + 5])
+        sphere(sideRibRadius);
+    }
+}
