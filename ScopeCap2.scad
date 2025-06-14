@@ -2,8 +2,6 @@
 $fn= $preview ? 32 : 128;
 epsilon = $preview ? 0.005 : 0;
 
-tolerance = 0.025;
-
 function InchToMillis(inch) = inch * 25.4;
 
 scopeOuterDiameter = 42.5; // cap inner diameter
