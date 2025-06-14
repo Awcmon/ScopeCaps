@@ -13,17 +13,18 @@ topWidth = 37;
 midWidth = 37;
 midRadiusing = 6;
 housingH = 27;
-coverExteriorH = 22;
+coverExteriorH = 24;
 // Width of the actual window.
 windowW = 32;
 windowH = 25;
 windowRadiusing = 6;
 hoodLength = 35;
 
-hexRadius = 2.5;
+hexDiam = 5;
 hexGap = 0.5;
+hexRadius = (hexDiam+hexGap)/2;
 hexLevels = 6;
-hexLength = 10;
+hexLength = 20;
 
 useTopRib = true;
 topRibRadius = 0.5;
@@ -89,7 +90,7 @@ module killflash_profile(includeWindow = true)
     }
 }
 
-linear_extrude(10)
+linear_extrude(hexLength)
 union()
 {
     hollow_out(wallThickness)
