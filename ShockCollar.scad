@@ -10,8 +10,6 @@
 $fn= $preview ? 32 : 128;
 epsilon = $preview ? 0.005 : 0;
 
-tolerance = 0.025;
-
 function InchToMillis(inch) = inch * 25.4;
 
 tubeDiameter = 44.5; // collar inner diameter
@@ -23,6 +21,8 @@ collarRadius = (tubeDiameter / 2) + collarThickness;
 cordRadius = cordDiam / 2;
 cordHoleInnerMargin = 1.5;
 cordHoleOffset = (tubeDiameter / 2) + (cordRadius) + cordHoleInnerMargin;
+
+counterSinkGap = 3;
 
 function magnitude2(a, b) = sqrt(a*a + b*b);
 
@@ -66,7 +66,6 @@ difference()
 
     // Screw hole
     cylHeight = 20;
-    counterSinkGap = 5;
     translate([0, -cordHoleOffset, collarLength/2]) rotate([0,90,0]) translate([0,0,-cylHeight/2]) cylinder(cylHeight, d=2.5);
     translate([counterSinkGap, -cordHoleOffset, collarLength/2]) rotate([0,90,0]) cylinder(cylHeight, d=4);
     translate([-counterSinkGap, -cordHoleOffset, collarLength/2]) rotate([0,-90,0]) cylinder(cylHeight, d=5, $fn=6);
