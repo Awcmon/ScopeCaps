@@ -1,0 +1,13 @@
+{
+    "parameterSets": {
+        "Razor Gen 2 4.5-27x56": {
+            "collarLength": "8",
+            "collarThickness": "2",
+            "cordDiam": "3.5",
+            "cordHoleInnerMargin": "1.5",
+            "counterSinkGap": "3",
+            "tubeDiameter": "46"
+        }
+    },
+    "fileFormatVersion": "1"
+}
