@@ -17,7 +17,7 @@ hexLength = 10; // 0.05
 // The diameter of the hex holes.
 hexSize = 4.5; // 0.05
 // How thick the material between the hexes are.
-hexGap = 1; // 0.05
+hexGap = 0.5; // 0.05
 // Sometimes needs to be increased to get full hex coverage.
 numAdditionalHexLayers = 1; // 1
 // Use a lip instead of a chamfer. Used for stuff with a slight bell around the objective like the Viper PST II 1-6x.
@@ -56,7 +56,15 @@ difference()
     }
     else
     {
-        chamfered_extrude(totalLength + epsilon, endScale = 1.05, endHeight = 0.8) circle(d = innerDiameter);
+        if(sleeveLength > 0)
+        {
+            chamfered_extrude(totalLength + epsilon, endScale = 1.05, endHeight = 0.8) circle(d = innerDiameter);
+        }
+        else
+        {
+            linear_extrude(totalLength + epsilon) circle(d = innerDiameter);
+        }
+        
     }
 
 }

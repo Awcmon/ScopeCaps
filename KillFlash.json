@@ -1,0 +1,16 @@
+{
+    "parameterSets": {
+        "Sparc2": {
+            "hexGap": "0.5",
+            "hexLength": "5.5",
+            "hexSize": "4.75",
+            "innerDiameter": "24.8",
+            "lipInnerDiameter": "30",
+            "numAdditionalHexLayers": "1",
+            "sleeveLength": "0",
+            "useLip": "false",
+            "wallThickness": "1.5"
+        }
+    },
+    "fileFormatVersion": "1"
+}
