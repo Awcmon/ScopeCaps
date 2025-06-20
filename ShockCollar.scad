@@ -23,7 +23,9 @@ cordRadius = cordDiam / 2;
 cordHoleInnerMargin = 1.5;
 cordHoleOffset = (tubeDiameter / 2) + (cordRadius) + cordHoleInnerMargin;
 
-counterSinkGap = 4.5; // [0:0.25:10]
+jointRadius = 12;
+gap = 2; // [0:0.25:10]
+counterSinkGap = 4; // [0:0.25:10]
 
 function magnitude2(a, b) = sqrt(a*a + b*b);
 
@@ -36,10 +38,11 @@ module collar()
             circle(collarRadius);
             translate([-cordHoleOffset,0,0]) circle(r=cordRadius + collarThickness);
             translate([cordHoleOffset,0,0]) circle(r=cordRadius + collarThickness);
-            translate([0,-cordHoleOffset,0]) circle(r=cordRadius + collarThickness);
+            // translate([0,-cordHoleOffset,0]) circle(r=cordRadius + collarThickness);
+            translate([0,-cordHoleOffset + jointRadius,0]) circle(r=jointRadius + collarThickness + cordRadius);
         }
         cutLength = cordHoleOffset + cordRadius + collarThickness;
-        translate([0, -cutLength, 0]) square([2, cutLength], center=true);
+        translate([0, -cutLength, 0]) square([gap, cutLength], center=true);
     }
 }
 

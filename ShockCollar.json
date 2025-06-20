@@ -8,14 +8,6 @@
             "counterSinkGap": "3",
             "tubeDiameter": "46"
         },
-        "Bushnell MPED 3-18x50": {
-            "collarLength": "8",
-            "collarThickness": "2",
-            "cordDiam": "3.75",
-            "cordHoleInnerMargin": "1.5",
-            "counterSinkGap": "4.5",
-            "tubeDiameter": "45.8"
-        },
         "Bushnell MPED 3-18x50 Obj": {
             "collarLength": "8",
             "collarThickness": "2",
@@ -23,6 +15,26 @@
             "cordHoleInnerMargin": "1.5",
             "counterSinkGap": "4.5",
             "tubeDiameter": "57.2"
+        },
+        "Bushnell MPED 3-18x50 WrappedObj": {
+            "collarLength": "8",
+            "collarThickness": "2",
+            "cordDiam": "3.75",
+            "cordHoleInnerMargin": "1.5",
+            "counterSinkGap": "4",
+            "gap": "2",
+            "jointRadius": "12",
+            "tubeDiameter": "59.5"
+        },
+        "Bushnell MPED 3-18x50": {
+            "collarLength": "8",
+            "collarThickness": "2",
+            "cordDiam": "3.75",
+            "cordHoleInnerMargin": "1.5",
+            "counterSinkGap": "4",
+            "gap": "2",
+            "jointRadius": "12",
+            "tubeDiameter": "45.8"
         }
     },
     "fileFormatVersion": "1"
