@@ -12,7 +12,8 @@ epsilon = $preview ? 0.005 : 0;
 
 function InchToMillis(inch) = inch * 25.4;
 
-tubeDiameter = 44.5; // collar inner diameter
+// collar inner diameter
+tubeDiameter = 44.5; // [0:0.05:100]
 collarThickness = 2;
 collarLength = 8;
 cordDiam = 3.75; // [0:0.25:10]

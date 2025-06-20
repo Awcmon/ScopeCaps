@@ -4,7 +4,8 @@ epsilon = $preview ? 0.005 : 0;
 
 function InchToMillis(inch) = inch * 25.4;
 
-scopeOuterDiameter = 42.5; // cap inner diameter
+// cap inner diameter
+scopeOuterDiameter = 42.5; // [0:0.05:100]
 capThickness = 2;
 wallThickness = 2;
 capDepth = 3;
