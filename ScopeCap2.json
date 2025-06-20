@@ -20,6 +20,27 @@
             "textDepth": "0.3",
             "textPlacement": "2",
             "wallThickness": "2"
+        },
+        "Bushnell MPED 3-18x50": {
+            "capChamferDepth": "2",
+            "capDepth": "3",
+            "capThickness": "2",
+            "cordDiam": "3.75",
+            "cordHoleInnerMargin": "1.5",
+            "logoDestH": "12",
+            "logoPath": "SciTangAwcmon3_Bold.svg",
+            "logoSrcH": "17",
+            "logoSrcW": "40",
+            "scopeOuterDiameter": "46.5",
+            "slopeThickness": "2",
+            "slopeType": "0",
+            "tabLengthBottom": "3",
+            "tabLengthTop": "-1",
+            "tabRounding": "3",
+            "tabThickness": "2",
+            "textDepth": "0.3",
+            "textPlacement": "2",
+            "wallThickness": "2"
         }
     },
     "fileFormatVersion": "1"

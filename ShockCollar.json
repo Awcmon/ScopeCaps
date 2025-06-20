@@ -7,6 +7,14 @@
             "cordHoleInnerMargin": "1.5",
             "counterSinkGap": "3",
             "tubeDiameter": "46"
+        },
+        "Bushnell MPED 3-18x50": {
+            "collarLength": "8",
+            "collarThickness": "2",
+            "cordDiam": "3.75",
+            "cordHoleInnerMargin": "1.5",
+            "counterSinkGap": "4.5",
+            "tubeDiameter": "45.8"
         }
     },
     "fileFormatVersion": "1"
