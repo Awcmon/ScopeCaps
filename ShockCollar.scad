@@ -22,7 +22,7 @@ cordRadius = cordDiam / 2;
 cordHoleInnerMargin = 1.5;
 cordHoleOffset = (tubeDiameter / 2) + (cordRadius) + cordHoleInnerMargin;
 
-counterSinkGap = 3;
+counterSinkGap = 4.5; // [0:0.25:10]
 
 function magnitude2(a, b) = sqrt(a*a + b*b);
 
