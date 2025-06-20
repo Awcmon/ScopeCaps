@@ -9,7 +9,7 @@ capThickness = 2;
 wallThickness = 2;
 capDepth = 3;
 capChamferDepth = 2;
-cordDiam = 3.5;
+cordDiam = 3.75; // [0:0.25:10]
 
 logoPath = "SciTangAwcmon3_Bold.svg";
 logoSrcW = 40;
