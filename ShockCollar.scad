@@ -15,7 +15,7 @@ function InchToMillis(inch) = inch * 25.4;
 tubeDiameter = 44.5; // collar inner diameter
 collarThickness = 2;
 collarLength = 8;
-cordDiam = 3.5;
+cordDiam = 3.75; // [0:0.25:10]
 
 collarRadius = (tubeDiameter / 2) + collarThickness;
 cordRadius = cordDiam / 2;
