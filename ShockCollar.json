@@ -35,6 +35,26 @@
             "gap": "2",
             "jointRadius": "12",
             "tubeDiameter": "45.8"
+        },
+        "DNT The One": {
+            "collarLength": "8",
+            "collarThickness": "2",
+            "cordDiam": "3.75",
+            "cordHoleInnerMargin": "1.5",
+            "counterSinkGap": "4",
+            "gap": "2",
+            "jointRadius": "12",
+            "tubeDiameter": "44.5"
+        },
+        "DNT The One Obj": {
+            "collarLength": "8",
+            "collarThickness": "2",
+            "cordDiam": "3.75",
+            "cordHoleInnerMargin": "1.5",
+            "counterSinkGap": "4",
+            "gap": "2",
+            "jointRadius": "12",
+            "tubeDiameter": "64"
         }
     },
     "fileFormatVersion": "1"
